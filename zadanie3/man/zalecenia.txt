@@ -1,0 +1,173 @@
+OGOLNIE ======================================================================
+
+ - Formatowanie kodu, komentarze i opisy funkcji tworzy sie w TRAKCIE
+   PISANIA programu, a nie dopiero po.
+   Pisanie opisow funkcji (niekoniecznie zawierajacych wszystkie szczegoly)
+   zmusza do lepszego przemyslenia tworzonego kodu. Niejednokrotnie
+   pozwala rowniez zauwazyc nieswiadomie przyjmowane zalozenia, ktore
+   nie zawsze musza byc spelnione. Pozwala to uniknac bledow, ktore moga
+   byc bardzo trudne do wykrycia.
+
+
+ZALECENIA FORMALNE CO DO PISANIA FUNKCJI: ====================================
+
+
+ - Funkcje, jak tez stosowane zmienne, powinny sie
+   samoopisywac, tzn. ich nazwy powinny odzwierciedlac to co
+   wykonuja i do czego sa stosowane.
+
+ - Jezeli jedna zmienna jest stosowana do kilku operacji i 
+   zmienna ta pelni tam rozne role (niezgodne z pierwotna
+   jej nazwa), to zalecane jest definiowanie dodatkowe zmiennych, 
+   ktorych nazwy beda zgodne z tymi zastosowaniami (kompilator i tak
+   to zoptymalizuje, zas program zyska na czytelnosci), np.
+  
+   Zle rozwiazanie:
+
+     int suma, skladnik;
+         
+     suma = 0;
+     while (suma <= 0) {
+        cin >> skladnik;   suma = suma + skladnik;
+     }
+     cin >> skladnik;
+     cout << suma*skladnik << endl;
+
+
+   Zalecane rozwiazanie:
+
+     int suma, skladnik, mnoznik;
+
+     suma = 0;
+     while (suma <= 0) {
+        cin >> skladnik;   suma = suma + skladnik;
+     }
+     cin >> mnoznik;
+     cout << suma*mnoznik << endl;
+
+
+
+ZALECENIA CO DO PISANIA KOMENTARZY: ======================================
+
+ - Komentarze musza byc tresciwe i opisywac tylko to co jest konieczne.
+
+ - W komentarzach nalezy zwrocic uwage na interpretacje znaczenia
+   zmiennych, parametrow lub wykonywanych operacji.
+   Komentarze nie moga duplikowac informacji, ktore w sposob oczywisty
+   wynikaja z zapisu danej operacji lub deklaracji zmiennej lub parametru.
+
+   np.
+
+   Zly komementarz:
+
+    suma = 0;
+    for (i=1; i < ROZMIAR_TAB; ++i) 
+       suma = suma + (srednia-tab[i])*(srednia-tab[i]); 
+    odchylenie_kw = suma / ROZMIAR_TAB; /* Dzielenie zm. suma przez */
+                                        /* ROZMIAR_TAB              */
+
+
+   Lepszy komentarz:
+
+    suma = 0;
+    for (i=1; i < ROZMIAR_TAB; ++i) 
+       suma = suma + (srednia-tab[i])*(srednia-tab[i]); 
+    odchylenie_kw = suma / ROZMIAR_TAB; /* Wyliczenie odchylenia    */
+                                        /* sredniokwadratowego      */
+
+   
+
+   Zly komentarz:
+
+    int Tab[ROZMIAR_TAB];
+    int srednia;   /* Zmienna zawiera wartosci calkowite.   */
+
+
+   Lepszy komentarz:
+
+    int Tab[ROZMIAR_TAB];
+    int  srednia;  /* Srednia wartosc z elementow tablicy Tab. */
+
+
+ - Opisy wewnatrz funkcji/metody stosujemy, gdy faktycznie sa istotne
+   i niezbedne do lepszego zrozumienia jej dzialania. Generalnie 
+   tego typu opisow staramy sie unikac. Zmienne poprzez swoje nazwy
+   powinny same sie opisywac. 
+   Waznejszej sa "zewnetrzne" opisy funkcji, o ktorych ponizej.
+
+OPIS FUNKCJI: =============================================================
+
+ - Opis funkcji nalezy tak tworzyc, aby bez potrzeby zagladania do kodu
+   funkcji osoba czytajaca opis miala wszystkie niezbedne informacje,
+   ktore pozwola jej prawidlowo uzyc tej funkcji.
+   W szczegolnosci zwrocic nalezy uwage na warunki wstepne jakie musza
+   byc spelnione przed wywolaniem funkcji.
+
+  OGOLNY SCHEMAT OPISU FUNKCJI:
+
+ /*
+  *  Ogolny opis przeznaczenia i dzialania funkcji. Opis taki powinien
+  *  byc tresciwy i zwarty.
+  *
+  *  Opis poszczegolnych parametrow wywolania funkcji, np.
+  *   Param1  - opis jego znaczenia,
+  *   Param1  - opis jego znaczenia,
+  *   itd.
+  *
+  *  Warunki wstepne:
+  *   Opis warunkow jakie musza byc spelnione przez poszczegolne
+  *   parametry lub zmienne, aby wywolanie bylo poprawne.
+  *
+  *  Warunki koncowe:
+  *   Opis warunkow koncowych jakie musza byc spelnione po zakonczeniu
+  *   pracy funkcji, aby mozna bylo uznac, ze dzialanie funkcji bylo
+  *   prawidlowe.
+  *
+  *  Opis wartosci zwracanych przez funkcje.
+  */
+
+ 
+  Ponizej przedstawiony jest przyklad opisu funkcji:
+            int PytajUzytkownika( char  Operator, int Arg1, int Arg2 );
+
+/*                                                                           
+ * Funkcja zadaje pytanie o wynik dzialania arytmetycznego. Sprawdza odpo- 
+ * wiedz uzytkownika i sygnalizuje czy jest ona poprawna czy tez nie.        
+ *                                                                           
+ *   Operator     - zawiera symbol operatora,                            
+ *   Arg1,Arg2    - zawieraja pierwszy i drugi argument operacji         
+ *                           arytmetycznej,                                  
+ *       Wynik    - zawiera wynik dzialania odpowiadajacemu
+ *                  Arg1 Operator Arg2
+ *                                                                           
+ *  Warunki wstepne:
+ *    Operator - symbol operatora musi byc jednym ze znakow: '+', '-',
+ *               '*', '/'.
+ *    Arg2 - w przypadku gdy symbol operatora jest znakiem '/', to 
+ *           to zwartosc Arg2 musi byc rozna od 0.
+ * 
+ *  Warunki koncowe:
+ *     brak
+ *
+ *  Zwracane wartosci:
+ *      1 - uzytkownikowi zostalo zadane jedno pytanie, na ktore 
+ *          odpowiedzial poprawnie.
+ *      2 - uzytkownikowi zostaly zadane dwa pytania. Na ostanie uzytkownik
+ *          odpowiedzial poprawnie.
+ *      3 - uzytkownikowi zostaly zadane trzy pytania. Na ostanie uzytkownik
+ *          odpowiedzial poprawnie.
+ *      4 - uzytkownikowi zostaly zadane trzy pytania. Na zadne z nich nie
+ *          odpowiedzial porawnie.
+ */ 
+int PytajUzytkownika( char  Operator, int Arg1, int Arg2 );
+
+
+
+FORMATOWANIE TEKSTU PROGRAMU: =============================================
+
+ - Kod funkcji nie powinien przekraczac wielkosci
+   "jednego ekranu" terminala tekstowego (25 linii).
+
+ - Linie kodu nie powinna przekraczac 79 kolumn.
+
+ - Zalecane jest unikanie stosowania znakow tabulacji.
